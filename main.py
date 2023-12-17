@@ -1,34 +1,52 @@
-lessons = open('lessons.csv', 'r')
-supervisors = open('supervisors.csv', 'r')
+lessons = open('lessons.csv', 'r', encoding='utf8')
+supervisors = open('supervisors.csv', 'r', encoding='utf8')
 
 class Course:
-    def __init__(self, id, title, date_time, exam_room, supervisors_needed, professor, semester):
+    def __init__(self, id, date_time, exam_rooms, semester, professor, supervisors_needed):
         self.id = id
-        self.title = title
         self.date_time = date_time
-        self.exam_room = exam_room
-        self.supervisors_needed = supervisors_needed
-        self.professor = professor
+        self.exam_rooms = exam_rooms
         self.semester = semester
-
+        self.professor = professor
+        self.supervisors_needed = supervisors_needed
+        
 class Supervisor:
-    def __init__(self, id, name, supervisions, unavailabilities):
+    def __init__(self, id, name, email, supervisions, unavailabilities):
         self.id = id
         self.name = name
+        self.email = email
         self.supervisions = supervisions
         self.unavailabilities = unavailabilities
+
+#μετατρέπουμε κάθε σειρά του lessons.csv σε αντικείμενο και τα τοποθετούμε στην λίστα courses
+courses = list()
+lessons.readline()
+for line in lessons:
+    line = lessons.readline()
+    line = line.strip()
+    ls = line.split(',')
+    exam = Course(int(ls[0]), ls[1], ls[2], ls[3], ls[4], int(ls[5]))
+    courses.append(exam)
+
+#μετατρέπουμε κάθε σειρά του supervisors.csv σε αντικείμενο και τα τοποθετούμε στην λίστα supervisors
+supervisors = list()
+for line in supervisors:
+    line = supervisors.readline()
+    ls = line.split(',')
+    supervisor = Supervisor(int(ls[0]), ls[1], ls[2], int(ls[3]), ls[4])
+    supervisors.append(supervisor)
 
 def assign(courses, supervisors):
     assigned = list()
     for course in courses:
-        available_sups = [Supervisor for Supervisor in supervisors if Course.id not in Supervisor.unavailabilities]
-        for i in range(Course.supervisors_needed):
+        available_sups = [supervisor for supervisor in supervisors if str(course.id) not in supervisor.unavailabilities]
+        for i in range(course.supervisors_needed):
             if len(available_sups) == 0:
                 break
             assigned_sup = available_sups.pop(0)
-            assigned_sup.supervisions -= 1
-            assigned.append(assigned.id)
+            assigned.append(assigned_sup)
     return assigned
+
 
 
 

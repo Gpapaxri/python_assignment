@@ -28,6 +28,7 @@ def get_courses_from_csv():
         ls = line.split(',')
         exam = Course(int(ls[0]), ls[1], ls[2], ls[3], ls[4], int(ls[5]))
         courses.append(exam)
+    return courses
 
 def get_supervisors_from_csv():
     #μετατρέπουμε κάθε σειρά του supervisors.csv σε αντικείμενο και τα τοποθετούμε στην λίστα supervisors
@@ -37,7 +38,10 @@ def get_supervisors_from_csv():
         ls = line.split(',')
         supervisor = Supervisor(int(ls[0]), ls[1], ls[2], int(ls[3]), ls[4])
         supervisors.append(supervisor)
+    return supervisors
 
+courses = get_courses_from_csv()
+supervisors = get_supervisors_from_csv()
 def assign(courses, supervisors):
     assigned = list()
     for course in courses:

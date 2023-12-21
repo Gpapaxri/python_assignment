@@ -38,6 +38,8 @@ def get_supervisors_from_csv(supervisors):
         supervisors.append(supervisor)
     return supervisors
 
+courses = get_courses_from_csv()
+supervisors = get_supervisors_from_csv()
 def assign(courses, supervisors):
     assigned = list()
     for course in courses:

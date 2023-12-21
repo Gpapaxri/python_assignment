@@ -18,25 +18,25 @@ class Supervisor:
         self.supervisions = supervisions
         self.unavailabilities = unavailabilities
 
-def get_courses_from_csv():
+def get_courses_from_csv(lessons):
     #μετατρέπουμε κάθε σειρά του lessons.csv σε αντικείμενο και τα τοποθετούμε στην λίστα courses
     courses = list()
     lessons.readline()
     for line in lessons:
-        line = lessons.readline()
         line = line.strip()
         ls = line.split(',')
         exam = Course(int(ls[0]), ls[1], ls[2], ls[3], ls[4], int(ls[5]))
         courses.append(exam)
+    return courses
 
-def get_supervisors_from_csv():
+def get_supervisors_from_csv(supervisors):
     #μετατρέπουμε κάθε σειρά του supervisors.csv σε αντικείμενο και τα τοποθετούμε στην λίστα supervisors
     supervisors = list()
     for line in supervisors:
-        line = supervisors.readline()
         ls = line.split(',')
         supervisor = Supervisor(int(ls[0]), ls[1], ls[2], int(ls[3]), ls[4])
         supervisors.append(supervisor)
+    return supervisors
 
 def assign(courses, supervisors):
     assigned = list()
